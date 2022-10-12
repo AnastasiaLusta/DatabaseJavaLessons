@@ -66,7 +66,7 @@ public class AppUser {
         var login = kbScanner.nextLine();
         System.out.print("Password: ");
         var pass = kbScanner.nextLine();
-        var user = userDAO.getUserByCredentialsOld(login, pass);
+        var user = userDAO.getUserByCredentials(login, pass);
         if (user == null) {
             System.out.println("Access denied");
             return false;
