@@ -22,6 +22,7 @@ public class AppUser {
     }
 
     public void run() {
+        // creates table of users if not exists
         var sql = "CREATE TABLE IF NOT EXISTS Users (" +
                 "    `id`    CHAR(36)     NOT NULL   COMMENT 'UUID'," +
                 "    `login` VARCHAR(32)  NOT NULL," +
@@ -36,24 +37,30 @@ public class AppUser {
             System.out.println(sql);
             return;
         }
-        var kbScanner = new Scanner(System.in);
-        System.out.print("1 - Register\n2 - Log In\n -->");
-        int userChoice = kbScanner.nextInt();
-        switch (userChoice) {
-            case 1:
-                this.regUser();
-                break;
-            case 2:
-                this.authUser();
-                break;
-            default:
-                System.out.println("Error");
-                break;
-        }
 
+        // menu to interact with users database
+        var kbScanner = new Scanner(System.in);
+        while(true){
+            System.out.print("1 - Register\n2 - Log In\n0.Exit\n -->");
+            int userChoice = kbScanner.nextInt();
+            switch (userChoice) {
+                case 1:
+                    this.regUser();
+                    break;
+                case 2:
+                    this.authUser();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Error");
+                    break;
+            }
+        }
     }
 
     private boolean authUser() {
+        // autorization of user
         var kbScanner = new Scanner(System.in);
         System.out.print("Login: ");
         var login = kbScanner.nextLine();
@@ -73,6 +80,7 @@ public class AppUser {
         var login = "";
         var pass = "";
         var pass2 = "";
+        // checks if login is already used and is it not empty
         while (true) {
             System.out.println("Enter login: ");
             login = kbScanner.nextLine();
@@ -86,6 +94,8 @@ public class AppUser {
             }
             break;
         }
+
+        // checks if password is not empty and if it is equal to second password
         while (true) {
             System.out.println("Enter the password");
             pass = kbScanner.nextLine();
@@ -104,6 +114,7 @@ public class AppUser {
         System.out.println("Name:");
         var name = kbScanner.nextLine();
 
+        // adds user to database and returns id of user
         var user = new User();
         user.setLogin(login);
         user.setPass(pass);
